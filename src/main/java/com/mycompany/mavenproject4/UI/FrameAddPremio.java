@@ -4,37 +4,28 @@
  */
 package com.mycompany.mavenproject4.UI;
 
+import com.mycompany.mavenproject4.Premios;
 import com.mycompany.mavenproject4.ServicioAplicacion;
-import com.mycompany.mavenproject4.Tareas;
-import com.mycompany.mavenproject4.Usuario;
-import com.mycompany.mavenproject4.UsuarioPerteneceFamilia;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author tetra
  */
-public class FrameAdmTareas extends javax.swing.JFrame {
+public class FrameAddPremio extends javax.swing.JFrame {
 
-    private UsuarioPerteneceFamilia upf;
-    private int idFamilia;
     private ServicioAplicacion servicio;
-    private Usuario usuarioLogeado;
-    private Tareas tareaSeleccionada;
-    private FramePantallaPrincipal padre;
+    private int idFamilia;
+    private FramePremiosPantalla padre;
 
     /**
-     * Creates new form FrameAdmTareas
+     * Creates new form FrameAddPremio
      */
-    public FrameAdmTareas(UsuarioPerteneceFamilia upf, Usuario usuarioLogeado, Tareas tareaSeleccionada, FramePantallaPrincipal padre) {
+    public FrameAddPremio(int idFamilia, FramePremiosPantalla padre ) {
         initComponents();
         this.padre=padre;
-        this.usuarioLogeado = usuarioLogeado;
+        this.idFamilia = idFamilia;
         this.servicio = new ServicioAplicacion();
-        this.upf = upf;
-        this.tareaSeleccionada = tareaSeleccionada;
-        idFamilia = upf.getIdFamilia();
-        recuperaFormulario();
     }
 
     /**
@@ -52,12 +43,16 @@ public class FrameAdmTareas extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         txtNombre = new javax.swing.JTextField();
-        txtDescripcion = new javax.swing.JTextField();
-        txtPuntos = new javax.swing.JTextField();
-        ChckActivo = new javax.swing.JCheckBox();
+        txtDuracion = new javax.swing.JTextField();
+        txtPuntosRequeridos = new javax.swing.JTextField();
+        chkActivo = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txtDescripcion = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        txtIdPremio = new javax.swing.JTextField();
         jPanel15 = new javax.swing.JPanel();
         BtnCancelar = new javax.swing.JButton();
         BtnEditar = new javax.swing.JButton();
@@ -74,7 +69,7 @@ public class FrameAdmTareas extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 48)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("ADMINISTRAR TAREA");
+        jLabel7.setText("AÑADIR PREMIO");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -98,32 +93,24 @@ public class FrameAdmTareas extends javax.swing.JFrame {
         txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(0, 30, 54));
-        txtNombre.setText("DNI");
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreActionPerformed(evt);
             }
         });
 
-        txtDescripcion.setBackground(new java.awt.Color(255, 255, 255));
-        txtDescripcion.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
-        txtDescripcion.setForeground(new java.awt.Color(0, 30, 54));
-        txtDescripcion.setText("jTextField1");
-        txtDescripcion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDescripcionActionPerformed(evt);
-            }
-        });
+        txtDuracion.setBackground(new java.awt.Color(255, 255, 255));
+        txtDuracion.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
+        txtDuracion.setForeground(new java.awt.Color(0, 30, 54));
 
-        txtPuntos.setBackground(new java.awt.Color(255, 255, 255));
-        txtPuntos.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
-        txtPuntos.setForeground(new java.awt.Color(0, 30, 54));
-        txtPuntos.setText("jTextField1");
+        txtPuntosRequeridos.setBackground(new java.awt.Color(255, 255, 255));
+        txtPuntosRequeridos.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
+        txtPuntosRequeridos.setForeground(new java.awt.Color(0, 30, 54));
 
-        ChckActivo.setBackground(new java.awt.Color(255, 255, 255));
-        ChckActivo.setForeground(new java.awt.Color(0, 30, 54));
-        ChckActivo.setText("Activa");
-        ChckActivo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        chkActivo.setBackground(new java.awt.Color(255, 255, 255));
+        chkActivo.setForeground(new java.awt.Color(0, 30, 54));
+        chkActivo.setText("Activa");
+        chkActivo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
@@ -140,6 +127,29 @@ public class FrameAdmTareas extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(0, 30, 54));
         jLabel11.setText("Descripción");
 
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 30, 54));
+        jLabel12.setText("ID del premio");
+
+        txtDescripcion.setBackground(new java.awt.Color(255, 255, 255));
+        txtDescripcion.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
+        txtDescripcion.setForeground(new java.awt.Color(0, 30, 54));
+
+        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel14.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 30, 54));
+        jLabel14.setText("Duracion (Días):");
+
+        txtIdPremio.setBackground(new java.awt.Color(255, 255, 255));
+        txtIdPremio.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
+        txtIdPremio.setForeground(new java.awt.Color(0, 30, 54));
+        txtIdPremio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdPremioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
@@ -148,14 +158,18 @@ public class FrameAdmTareas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtDescripcion)
+                    .addComponent(txtDuracion)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addComponent(txtPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPuntosRequeridos, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(ChckActivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(chkActivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtIdPremio, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
@@ -169,13 +183,21 @@ public class FrameAdmTareas extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addGap(4, 4, 4)
                 .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtIdPremio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14)
+                .addGap(4, 4, 4)
+                .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ChckActivo))
-                .addGap(56, 56, 56))
+                    .addComponent(txtPuntosRequeridos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chkActivo))
+                .addContainerGap())
         );
 
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
@@ -193,7 +215,7 @@ public class FrameAdmTareas extends javax.swing.JFrame {
         BtnEditar.setBackground(new java.awt.Color(0, 30, 54));
         BtnEditar.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         BtnEditar.setForeground(new java.awt.Color(255, 255, 255));
-        BtnEditar.setText("Guardar cambios");
+        BtnEditar.setText("Crear Premio");
         BtnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnEditarActionPerformed(evt);
@@ -207,8 +229,8 @@ public class FrameAdmTareas extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(BtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(BtnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BtnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel15Layout.setVerticalGroup(
@@ -216,8 +238,8 @@ public class FrameAdmTareas extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                    .addComponent(BtnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(BtnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                    .addComponent(BtnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -235,7 +257,7 @@ public class FrameAdmTareas extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -244,92 +266,99 @@ public class FrameAdmTareas extends javax.swing.JFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel8)
+                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addGap(25, 25, 25)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
-        tareaSeleccionada.setNombre(txtNombre.getText());
-        tareaSeleccionada.setDescripcion(txtDescripcion.getText());
-        try {
-            int puntos = Integer.parseInt(txtPuntos.getText());
-            tareaSeleccionada.setPuntos(puntos);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para los puntos.", "Error de formato", JOptionPane.ERROR_MESSAGE);
-        }
-        boolean estadoActivo = ChckActivo.isSelected();
-        tareaSeleccionada.setActivo(estadoActivo);
-        try {
-            servicio.editarTarea(tareaSeleccionada);
-            JOptionPane.showMessageDialog(this, "Tarea Actualizada Correctamente", "Listo", JOptionPane.INFORMATION_MESSAGE);
-            padre.cargarTareasDeFamilia(idFamilia);
-            this.dispose();
-            
-        } catch (Exception e) {
-            System.err.println("Error al actualizar la tarea: " + e.getMessage());
-        }
-    }//GEN-LAST:event_BtnEditarActionPerformed
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
 
     private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_BtnCancelarActionPerformed
 
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
+    private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
+        guardarPremio();
+        padre.cargarPremios(idFamilia);
+    }//GEN-LAST:event_BtnEditarActionPerformed
 
-    private void txtDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionActionPerformed
+    private void txtIdPremioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdPremioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDescripcionActionPerformed
-    private void recuperaFormulario() {
-        this.txtNombre.setText(tareaSeleccionada.getNombre());
-        this.txtDescripcion.setText(tareaSeleccionada.getDescripcion());
-        this.txtPuntos.setText(String.valueOf(tareaSeleccionada.getPuntos()));
-        if (tareaSeleccionada.getActivo()) {
-            this.ChckActivo.setSelected(true);
-        } else {
-            this.ChckActivo.setSelected(false);
-        }
-    }
+    }//GEN-LAST:event_txtIdPremioActionPerformed
+
     /**
      * @param args the command line arguments
      */
+    private void guardarPremio() {
+        String idPremio = txtIdPremio.getText().trim();
+        if (servicio.findPremioById(idPremio) != null) {
+            JOptionPane.showMessageDialog(this, "ID de premio ya existe. Por favor, ingrese una ID única.", "Error de ID", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
+        try {
+            Premios nuevoPremio = new Premios();
+            nuevoPremio.setIdPremio(idPremio);
+            nuevoPremio.setNombre(txtNombre.getText());
+            nuevoPremio.setDescripcion(txtDescripcion.getText());
+            nuevoPremio.setPuntosRequeridos(Integer.parseInt(txtPuntosRequeridos.getText()));
+            nuevoPremio.setActivo(chkActivo.isSelected());
+            nuevoPremio.setDuracion(Integer.parseInt(txtDuracion.getText()));
+            nuevoPremio.setIdFamilia(idFamilia);
+
+            servicio.createPremio(nuevoPremio);
+            JOptionPane.showMessageDialog(this, "Premio creado correctamente.", "Creación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error en los campos numéricos. Por favor, verifique.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al crear el premio: " + e.getMessage(), "Error de creación", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCancelar;
     private javax.swing.JButton BtnEditar;
-    private javax.swing.JCheckBox ChckActivo;
+    private javax.swing.JCheckBox chkActivo;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -339,7 +368,9 @@ public class FrameAdmTareas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtDuracion;
+    private javax.swing.JTextField txtIdPremio;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPuntos;
+    private javax.swing.JTextField txtPuntosRequeridos;
     // End of variables declaration//GEN-END:variables
 }

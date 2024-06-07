@@ -59,17 +59,7 @@ public class FrameListaFams extends javax.swing.JFrame {
         // Verifica si el dniAdmin corresponde a alguna familia existente
         Familia familia = famCont.findFamiliaByDniAdmin(dniAdmin);
         if (familia != null) {
-            UsuarioPerteneceFamilia upf = new UsuarioPerteneceFamilia();
-            upf.setIsActive(false);  // Activar la relación
-            upf.setPuntos(0);     // Establecer puntos iniciales
-            upf.setIdFamilia(familia.getIdFamilia());
-            upf.setDni(user.getDni());
-            try {
-                upfCont.create(upf);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            JOptionPane.showMessageDialog(this, "Solicitud enviada correctamente a la familia " + familia.getNombre(), "Solicitud Enviada", JOptionPane.INFORMATION_MESSAGE);
+            servicio.procesarSolicitudUnirseAFamilia(dniAdmin, user);
         } else {
             JOptionPane.showMessageDialog(this, "No se encontró ninguna familia con el DNI del administrador proporcionado.", "Familia No Encontrada", JOptionPane.ERROR_MESSAGE);
         }
@@ -115,9 +105,9 @@ public class FrameListaFams extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(154, Short.MAX_VALUE)
+                .addContainerGap(139, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

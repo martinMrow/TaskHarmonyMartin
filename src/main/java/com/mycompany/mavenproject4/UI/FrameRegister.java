@@ -6,6 +6,7 @@ package com.mycompany.mavenproject4.UI;
 
 import com.mycompany.mavenproject4.ServicioAplicacion;
 import com.mycompany.mavenproject4.UI.FrameLogin;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -63,9 +64,9 @@ public class FrameRegister extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(189, Short.MAX_VALUE)
+                .addContainerGap(145, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,8 +91,13 @@ public class FrameRegister extends javax.swing.JFrame {
         txtPass.setBackground(new java.awt.Color(255, 255, 255));
         txtPass.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
         txtPass.setForeground(new java.awt.Color(0, 30, 54));
-        txtPass.setText("jPasswordField1");
+        txtPass.setText("000000");
         txtPass.setToolTipText("");
+        txtPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassActionPerformed(evt);
+            }
+        });
 
         BtnRegister.setBackground(new java.awt.Color(0, 30, 54));
         BtnRegister.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
@@ -181,7 +187,7 @@ public class FrameRegister extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(BtnLogin)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -207,13 +213,13 @@ public class FrameRegister extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -248,6 +254,10 @@ public class FrameRegister extends javax.swing.JFrame {
 
         // Llamar al método de servicio para registrar el usuario
         servicio.registrarUsuario(dni, nombre, apellidos, password);
+        JOptionPane.showMessageDialog(this, "Registro completado exitosamente", "Registro", JOptionPane.INFORMATION_MESSAGE);
+
+        FrameLogin frameLogin = new FrameLogin();
+        frameLogin.setVisible(true);
     }//GEN-LAST:event_BtnRegisterActionPerformed
 
     private void BtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginActionPerformed
@@ -267,10 +277,13 @@ public class FrameRegister extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtApellidosActionPerformed
 
+    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPassActionPerformed
+
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnLogin;

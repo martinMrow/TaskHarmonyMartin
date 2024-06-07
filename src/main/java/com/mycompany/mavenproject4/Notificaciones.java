@@ -16,6 +16,7 @@ import java.util.Date;
 public class Notificaciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_mensaje")  // Ajuste aquí para coincidir con el nombre de la columna en la base de datos
     private Long id;
 
     @Column(name = "titulo")

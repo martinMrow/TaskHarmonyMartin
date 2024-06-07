@@ -7,7 +7,7 @@ package com.mycompany.mavenproject4.UI;
 import com.mycompany.mavenproject4.ServicioAplicacion;
 import com.mycompany.mavenproject4.SideMenuPanel;
 import com.mycompany.mavenproject4.Tareas;
-import com.mycompany.mavenproject4.TareasJpaController;
+import com.mycompany.mavenproject4.UI.FrameAdmUHT;
 import com.mycompany.mavenproject4.UI.FrameListaFams;
 import com.mycompany.mavenproject4.UI.FrameLogin;
 import com.mycompany.mavenproject4.UI.FrameNotificaciones;
@@ -16,12 +16,15 @@ import com.mycompany.mavenproject4.UI.FramePremiosActivos;
 import com.mycompany.mavenproject4.UI.FramePremiosPantalla;
 import com.mycompany.mavenproject4.Usuario;
 import com.mycompany.mavenproject4.UsuarioHaceTareas;
+import com.mycompany.mavenproject4.UsuarioHaceTareasId;
 import com.mycompany.mavenproject4.UsuarioPerteneceFamilia;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -30,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author tetra
  */
-public class FrameTareasHechas extends javax.swing.JFrame {
+public class FrameTareasHechasPorFam extends javax.swing.JFrame {
 
     private SideMenuPanel sp;
     private int menuInt = 1;
@@ -42,9 +45,9 @@ public class FrameTareasHechas extends javax.swing.JFrame {
     JScrollPane scrollPane = new JScrollPane(tabTareasHechas);
 
     /**
-     * Creates new form FrameTareasHechas
+     * Creates new form FrameTareasHechasPorFam
      */
-    public FrameTareasHechas(UsuarioPerteneceFamilia upf, Usuario usuarioLogeado) {
+    public FrameTareasHechasPorFam(UsuarioPerteneceFamilia upf, Usuario usuarioLogeado) {
         initComponents();
         this.usuarioLogeado = usuarioLogeado;
         this.servicio = new ServicioAplicacion();
@@ -80,9 +83,11 @@ public class FrameTareasHechas extends javax.swing.JFrame {
         BtnCambiarFam = new javax.swing.JButton();
         BtnCerrarSesion = new javax.swing.JButton();
         BtnNotis = new javax.swing.JButton();
+        BtnTareasHechas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabTareasHechas = new javax.swing.JTable();
+        BtnCalificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,6 +165,17 @@ public class FrameTareasHechas extends javax.swing.JFrame {
             }
         });
 
+        BtnTareasHechas.setBackground(new java.awt.Color(0, 30, 54));
+        BtnTareasHechas.setForeground(new java.awt.Color(255, 255, 255));
+        BtnTareasHechas.setText("Tareas Hechas");
+        BtnTareasHechas.setMaximumSize(new java.awt.Dimension(114, 23));
+        BtnTareasHechas.setMinimumSize(new java.awt.Dimension(114, 23));
+        BtnTareasHechas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnTareasHechasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout sidebarLayout = new javax.swing.GroupLayout(sidebar);
         sidebar.setLayout(sidebarLayout);
         sidebarLayout.setHorizontalGroup(
@@ -175,7 +191,8 @@ public class FrameTareasHechas extends javax.swing.JFrame {
                     .addComponent(BtnTareas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnPremiosAct, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnPremiosTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnNotis, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(BtnNotis, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BtnTareasHechas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         sidebarLayout.setVerticalGroup(
@@ -186,10 +203,12 @@ public class FrameTareasHechas extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(BtnTareas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BtnTareasHechas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnPremiosTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnPremiosAct)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnNotis)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BtnCerrarSesion)
@@ -201,7 +220,7 @@ public class FrameTareasHechas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 30, 54));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("TAREAS HECHAS");
+        jLabel1.setText("TAREAS COMPLETADAS");
 
         jScrollPane1.setBackground(new java.awt.Color(226, 226, 226));
 
@@ -210,16 +229,27 @@ public class FrameTareasHechas extends javax.swing.JFrame {
         TabTareasHechas.setForeground(new java.awt.Color(0, 30, 54));
         TabTareasHechas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Puntos", "Comentarios", "Fecha"
+                "Nombre", "Tarea", "putnos", "Fecha", "Id", "DNI"
             }
         ));
         jScrollPane1.setViewportView(TabTareasHechas);
+
+        BtnCalificar.setBackground(new java.awt.Color(0, 30, 54));
+        BtnCalificar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        BtnCalificar.setForeground(new java.awt.Color(255, 255, 255));
+        BtnCalificar.setText("Calificar");
+        BtnCalificar.setToolTipText("");
+        BtnCalificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCalificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -227,11 +257,17 @@ public class FrameTareasHechas extends javax.swing.JFrame {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BtnCalificar, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +276,9 @@ public class FrameTareasHechas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnCalificar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -268,6 +306,7 @@ public class FrameTareasHechas extends javax.swing.JFrame {
             this.BtnPremiosTotal.setVisible(true);
             this.BtnTareas.setVisible(true);
             this.BtnNotis.setVisible(true);
+            this.BtnTareasHechas.setVisible(true);
 
             this.menuInt = 1;
         } else {
@@ -278,31 +317,12 @@ public class FrameTareasHechas extends javax.swing.JFrame {
             this.BtnPremiosTotal.setVisible(false);
             this.BtnTareas.setVisible(false);
             this.BtnNotis.setVisible(false);
+            this.BtnTareasHechas.setVisible(false);
 
             this.menuInt = 0;
 
         }
     }//GEN-LAST:event_BtnMenuActionPerformed
-
-    private void BtnTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTareasActionPerformed
-        new FramePantallaPrincipal(upf, usuarioLogeado).setVisible(true); // 
-        this.dispose();
-    }//GEN-LAST:event_BtnTareasActionPerformed
-
-    private void BtnNotisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNotisActionPerformed
-        new FrameNotificaciones(upf, usuarioLogeado).setVisible(true); // 
-        this.dispose();
-    }//GEN-LAST:event_BtnNotisActionPerformed
-
-    private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
-        new FrameLogin().setVisible(true); // 
-        this.dispose();
-    }//GEN-LAST:event_BtnCerrarSesionActionPerformed
-
-    private void BtnCambiarFamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCambiarFamActionPerformed
-        new FrameListaFams(usuarioLogeado.getDni()).setVisible(true); // 
-        this.dispose();
-    }//GEN-LAST:event_BtnCambiarFamActionPerformed
 
     private void BtnPremiosTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPremiosTotalActionPerformed
         new FramePremiosPantalla(upf, usuarioLogeado).setVisible(true);
@@ -313,47 +333,105 @@ public class FrameTareasHechas extends javax.swing.JFrame {
         try {
             new FramePremiosActivos(usuarioLogeado, upf).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(FrameTareasHechas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrameTareasHechasPorFam.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.dispose();
     }//GEN-LAST:event_BtnPremiosActActionPerformed
+
+    private void BtnTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTareasActionPerformed
+        new FramePantallaPrincipal(upf, usuarioLogeado).setVisible(true); //
+        this.dispose();
+    }//GEN-LAST:event_BtnTareasActionPerformed
+
+    private void BtnCambiarFamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCambiarFamActionPerformed
+        new FrameListaFams(usuarioLogeado.getDni()).setVisible(true); //
+        this.dispose();
+    }//GEN-LAST:event_BtnCambiarFamActionPerformed
+
+    private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
+        new FrameLogin().setVisible(true); //
+        this.dispose();
+    }//GEN-LAST:event_BtnCerrarSesionActionPerformed
+
+    private void BtnNotisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNotisActionPerformed
+        new FrameNotificaciones(upf, usuarioLogeado).setVisible(true); //
+        this.dispose();
+    }//GEN-LAST:event_BtnNotisActionPerformed
+
+    private void BtnCalificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCalificarActionPerformed
+        int selectedRow = TabTareasHechas.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una tarea para calificar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) TabTareasHechas.getModel();
+        System.out.println("Número de columnas: " + model.getColumnCount()); // Imprime el número de columnas
+
+        // Accediendo a los datos según los índices correctos de las columnas
+        String dni = model.getValueAt(selectedRow, 5).toString(); // DNI del usuario está en la sexta columna (índice 5)
+        String idTarea = model.getValueAt(selectedRow, 4).toString(); // ID de la tarea está en la quinta columna (índice 4)
+        Date fechaRealizada;
+        try {
+            fechaRealizada = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(model.getValueAt(selectedRow, 3).toString()); // Fecha está en la cuarta columna (índice 3)
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Error al parsear la fecha.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        UsuarioHaceTareasId uhtId = new UsuarioHaceTareasId(dni, idTarea, fechaRealizada);
+        UsuarioHaceTareas usuarioHaceTareas = servicio.findUsuarioHaceTareas(uhtId);
+        if (usuarioHaceTareas == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró la tarea especificada.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Abrir el frame de administración pasando el objeto UsuarioHaceTareas encontrado
+        FrameAdmUHT frameAdmUHT = new FrameAdmUHT(usuarioHaceTareas, this, idFamilia);
+        frameAdmUHT.setVisible(true);
+    }//GEN-LAST:event_BtnCalificarActionPerformed
+
+    private void BtnTareasHechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTareasHechasActionPerformed
+        new FrameTareasHechas(upf, usuarioLogeado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BtnTareasHechasActionPerformed
     private void actualizarTablaTareasHechas() {
-        String idTarea;
-        String nombreTarea;
-        String comentario;
-        String puntosObtenidos;
-        List<UsuarioHaceTareas> listaTareasHechas = servicio.obtenerTareasRealizadasPorUsuarioEnFamilia(usuarioLogeado.getDni(), idFamilia);
+        List<UsuarioHaceTareas> listaTareasHechas = servicio.obtenerTareasRealizadasPorFamilia(idFamilia);
         DefaultTableModel model = (DefaultTableModel) TabTareasHechas.getModel();
         model.setRowCount(0); // Limpia la tabla antes de añadir nuevas filas
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (UsuarioHaceTareas tareaHecha : listaTareasHechas) {
-            idTarea = tareaHecha.getIdTarea();
-            Tareas tareaPorId = servicio.findTareaById(idTarea);
-            nombreTarea = tareaPorId.getNombre();
-            comentario = tareaHecha.getComentarios();
-            if (comentario == null) {
-                comentario = "Aún no se han hecho comentarios";
+            if (!tareaHecha.isCheckTarea()) { // Solo agrega las tareas que no están marcadas como check_tarea
+                Tareas tareaPorId = servicio.findTareaById(tareaHecha.getIdTarea());
+                Usuario usuario = servicio.findUsuarioByDni(tareaHecha.getDni()); // Asume que existe un método para obtener el Usuario por DNI
+
+                String comentario = tareaHecha.getComentarios();
+                if (comentario == null) {
+                    comentario = "Aún no se han hecho comentarios";
+                }
+
+                model.addRow(new Object[]{
+                    usuario.getNombre(), // Nombre del usuario que realizó la tarea1
+                    tareaPorId.getNombre(), // Nombre de la tarea2
+                    tareaHecha.getPuntosObtenidos(),//3
+                    sdf.format(tareaHecha.getFechaRealizada()), // Fecha en que se realizó la tarea4
+                    tareaPorId.getIdTarea(), // ID de la tarea
+                    tareaHecha.getDni() // DNI del usuario que realizó la tarea
+                });
             }
-
-            model.addRow(new Object[]{
-                nombreTarea,
-                tareaHecha.getPuntosObtenidos(),
-                comentario,
-                sdf.format(tareaHecha.getFechaRealizada())
-            });
         }
-    }
-
-    public void cargarTareasHechas() {
-        actualizarTablaTareasHechas();
     }
 
     /**
      * @param args the command line arguments
      */
+    public void cargarTareasHechas() {
+        actualizarTablaTareasHechas();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnCalificar;
     private javax.swing.JButton BtnCambiarFam;
     private javax.swing.JButton BtnCerrarSesion;
     private javax.swing.JButton BtnMenu;
@@ -361,6 +439,7 @@ public class FrameTareasHechas extends javax.swing.JFrame {
     private javax.swing.JButton BtnPremiosAct;
     private javax.swing.JButton BtnPremiosTotal;
     private javax.swing.JButton BtnTareas;
+    private javax.swing.JButton BtnTareasHechas;
     private javax.swing.JTable TabTareasHechas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

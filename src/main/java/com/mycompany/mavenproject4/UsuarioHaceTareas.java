@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "usuario_hace_tareas")
-@IdClass(UsuarioHaceTareasId.class) // Clase que define la clave compuesta
+@IdClass(UsuarioHaceTareasId.class)
 public class UsuarioHaceTareas {
 
     @Id
@@ -37,6 +37,20 @@ public class UsuarioHaceTareas {
 
     @Column(name = "puntos_obtenidos")
     private int puntosObtenidos;
+
+    @ManyToOne
+    @JoinColumn(name = "id_tarea", referencedColumnName = "id_tarea", insertable = false, updatable = false)
+    private Tareas tarea;
+
+    // Getters and setters
+    // Asegúrate de incluir getters y setters para la nueva propiedad 'tarea'
+    public Tareas getTarea() {
+        return tarea;
+    }
+
+    public void setTarea(Tareas tarea) {
+        this.tarea = tarea;
+    }
 
     // Getters and setters
     public String getDni() {

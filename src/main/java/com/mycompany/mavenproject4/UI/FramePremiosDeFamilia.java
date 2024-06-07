@@ -9,10 +9,12 @@ import com.mycompany.mavenproject4.ServicioAplicacion;
 import com.mycompany.mavenproject4.SideMenuPanel;
 import com.mycompany.mavenproject4.Usuario;
 import com.mycompany.mavenproject4.UsuarioPerteneceFamilia;
-import com.mycompany.mavenproject4.UsuarioPerteneceFamiliaPK;
 import com.mycompany.mavenproject4.UsuarioReclamaPremios;
+import com.mycompany.mavenproject4.UsuarioReclamaPremiosId;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,24 +24,24 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author tetra
  */
-public class FramePremiosPantalla extends javax.swing.JFrame {
+public class FramePremiosDeFamilia extends javax.swing.JFrame {
 
-    private SideMenuPanel sp;
+    private final SideMenuPanel sp;
     private int menuInt = 1;
-    private UsuarioPerteneceFamilia upf;
-    private int idFamilia;
-    private ServicioAplicacion servicio;
-    private Usuario usuarioLogeado;
+    private final UsuarioPerteneceFamilia upf;
+    private final int idFamilia;
+    private final ServicioAplicacion servicio;
+    private final Usuario usuarioLogeado;
 
     /**
-     * Creates new form FramePremiosPantalla
+     * Creates new form FramePremiosDeFamilia
      */
-    public FramePremiosPantalla(UsuarioPerteneceFamilia upf, Usuario usuarioLogeado) {
+    public FramePremiosDeFamilia(Usuario usuarioLogeado, UsuarioPerteneceFamilia upf) throws Exception {
         initComponents();
-        this.servicio = new ServicioAplicacion();
-        this.idFamilia = upf.getIdFamilia();
-        this.upf = upf;
         this.usuarioLogeado = usuarioLogeado;
+        this.servicio = new ServicioAplicacion();
+        this.upf = upf;
+        idFamilia = upf.getIdFamilia();
         sp = new SideMenuPanel(this);
         sp.setMain(mainPanel);
         sp.setSide(sidebar);
@@ -49,7 +51,7 @@ public class FramePremiosPantalla extends javax.swing.JFrame {
         sp.setSpeed(0);
         sp.setResponsiveMinWidth(600);
         sp.openMenu();
-        cargarPremios(idFamilia);
+        updatePremiosActivosTable();
     }
 
     /**
@@ -65,18 +67,16 @@ public class FramePremiosPantalla extends javax.swing.JFrame {
         sidebar = new javax.swing.JPanel();
         BtnMenu = new javax.swing.JButton();
         BtnTareas = new javax.swing.JButton();
-        BtnPremiosAct = new javax.swing.JButton();
+        BtnPremios = new javax.swing.JButton();
         BtnTareasEntregadas = new javax.swing.JButton();
         BtnCambiarFam = new javax.swing.JButton();
         BtnCerrarSesion = new javax.swing.JButton();
         BtnNotis = new javax.swing.JButton();
-        BtnAñadirPremios = new javax.swing.JButton();
-        BtnEditarPremio = new javax.swing.JButton();
-        BtnActivosEnLaFamilia = new javax.swing.JButton();
+        BtnPremiosAct = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TabPremios = new javax.swing.JTable();
-        BtnReclamarPremio = new javax.swing.JButton();
+        TabPremiosActivos = new javax.swing.JTable();
+        BtnDesactivarPremio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,12 +105,12 @@ public class FramePremiosPantalla extends javax.swing.JFrame {
             }
         });
 
-        BtnPremiosAct.setBackground(new java.awt.Color(0, 30, 54));
-        BtnPremiosAct.setForeground(new java.awt.Color(255, 255, 255));
-        BtnPremiosAct.setText("Premios Activos");
-        BtnPremiosAct.addActionListener(new java.awt.event.ActionListener() {
+        BtnPremios.setBackground(new java.awt.Color(0, 30, 54));
+        BtnPremios.setForeground(new java.awt.Color(255, 255, 255));
+        BtnPremios.setText("Premios");
+        BtnPremios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnPremiosActActionPerformed(evt);
+                BtnPremiosActionPerformed(evt);
             }
         });
 
@@ -154,36 +154,12 @@ public class FramePremiosPantalla extends javax.swing.JFrame {
             }
         });
 
-        BtnAñadirPremios.setBackground(new java.awt.Color(0, 30, 54));
-        BtnAñadirPremios.setForeground(new java.awt.Color(255, 255, 255));
-        BtnAñadirPremios.setText("Añadir Premios");
-        BtnAñadirPremios.setMaximumSize(new java.awt.Dimension(114, 23));
-        BtnAñadirPremios.setMinimumSize(new java.awt.Dimension(114, 23));
-        BtnAñadirPremios.addActionListener(new java.awt.event.ActionListener() {
+        BtnPremiosAct.setBackground(new java.awt.Color(0, 30, 54));
+        BtnPremiosAct.setForeground(new java.awt.Color(255, 255, 255));
+        BtnPremiosAct.setText("Premios Activos");
+        BtnPremiosAct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnAñadirPremiosActionPerformed(evt);
-            }
-        });
-
-        BtnEditarPremio.setBackground(new java.awt.Color(0, 30, 54));
-        BtnEditarPremio.setForeground(new java.awt.Color(255, 255, 255));
-        BtnEditarPremio.setText("Edirar Premios");
-        BtnEditarPremio.setMaximumSize(new java.awt.Dimension(114, 23));
-        BtnEditarPremio.setMinimumSize(new java.awt.Dimension(114, 23));
-        BtnEditarPremio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnEditarPremioActionPerformed(evt);
-            }
-        });
-
-        BtnActivosEnLaFamilia.setBackground(new java.awt.Color(0, 30, 54));
-        BtnActivosEnLaFamilia.setForeground(new java.awt.Color(255, 255, 255));
-        BtnActivosEnLaFamilia.setText("Activos por la Familia");
-        BtnActivosEnLaFamilia.setMaximumSize(new java.awt.Dimension(114, 23));
-        BtnActivosEnLaFamilia.setMinimumSize(new java.awt.Dimension(114, 23));
-        BtnActivosEnLaFamilia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnActivosEnLaFamiliaActionPerformed(evt);
+                BtnPremiosActActionPerformed(evt);
             }
         });
 
@@ -200,12 +176,10 @@ public class FramePremiosPantalla extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(BtnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(BtnTareasEntregadas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnPremiosAct, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BtnPremios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnTareas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnNotis, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnAñadirPremios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnEditarPremio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnActivosEnLaFamilia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(BtnPremiosAct, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         sidebarLayout.setVerticalGroup(
@@ -218,15 +192,11 @@ public class FramePremiosPantalla extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnTareasEntregadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BtnPremios)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnPremiosAct)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnNotis)
-                .addGap(41, 41, 41)
-                .addComponent(BtnAñadirPremios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtnEditarPremio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtnActivosEnLaFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BtnCerrarSesion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -237,33 +207,34 @@ public class FramePremiosPantalla extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 30, 54));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("PREMIOS");
+        jLabel1.setText("PREMIOS ACTIVOS");
 
         jScrollPane1.setBackground(new java.awt.Color(226, 226, 226));
 
-        TabPremios.setBackground(new java.awt.Color(226, 226, 226));
-        TabPremios.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
-        TabPremios.setForeground(new java.awt.Color(0, 30, 54));
-        TabPremios.setModel(new javax.swing.table.DefaultTableModel(
+        TabPremiosActivos.setBackground(new java.awt.Color(226, 226, 226));
+        TabPremiosActivos.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
+        TabPremiosActivos.setForeground(new java.awt.Color(0, 30, 54));
+        TabPremiosActivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Puntos", "Descripción"
+                "Usuario", "Premio", "Reclamado", "Tiempo restante", "Id", "Dni"
             }
         ));
-        jScrollPane1.setViewportView(TabPremios);
+        jScrollPane1.setViewportView(TabPremiosActivos);
 
-        BtnReclamarPremio.setBackground(new java.awt.Color(0, 30, 54));
-        BtnReclamarPremio.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 12)); // NOI18N
-        BtnReclamarPremio.setForeground(new java.awt.Color(255, 255, 255));
-        BtnReclamarPremio.setText("Reclamar premio");
-        BtnReclamarPremio.addActionListener(new java.awt.event.ActionListener() {
+        BtnDesactivarPremio.setBackground(new java.awt.Color(0, 30, 54));
+        BtnDesactivarPremio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        BtnDesactivarPremio.setForeground(new java.awt.Color(255, 255, 255));
+        BtnDesactivarPremio.setText("Desactivar");
+        BtnDesactivarPremio.setToolTipText("");
+        BtnDesactivarPremio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnReclamarPremioActionPerformed(evt);
+                BtnDesactivarPremioActionPerformed(evt);
             }
         });
 
@@ -279,7 +250,7 @@ public class FramePremiosPantalla extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(BtnReclamarPremio, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtnDesactivarPremio, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -290,17 +261,17 @@ public class FramePremiosPantalla extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnReclamarPremio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(BtnDesactivarPremio, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,177 +285,168 @@ public class FramePremiosPantalla extends javax.swing.JFrame {
         if (this.menuInt == 0) {
             sp.openMenu();
 
-            this.BtnTareas.setVisible(true);
-            this.BtnPremiosAct.setVisible(true);
-            this.BtnNotis.setVisible(true);
-            this.BtnTareasEntregadas.setVisible(true);
-            this.BtnAñadirPremios.setVisible(true);
-            this.BtnEditarPremio.setVisible(true);
+            this.BtnPremios.setVisible(true);
             this.BtnCambiarFam.setVisible(true);
             this.BtnCerrarSesion.setVisible(true);
-            this.BtnActivosEnLaFamilia.setVisible(true);
+            this.BtnTareas.setVisible(true);
+            this.BtnTareasEntregadas.setVisible(true);
+            this.BtnNotis.setVisible(true);
+            this.BtnPremiosAct.setVisible(true);
 
             this.menuInt = 1;
         } else {
             sp.closeMenu();
-            this.BtnTareas.setVisible(false);
-            this.BtnPremiosAct.setVisible(false);
-            this.BtnNotis.setVisible(false);
-            this.BtnTareasEntregadas.setVisible(false);
-            this.BtnAñadirPremios.setVisible(false);
-            this.BtnEditarPremio.setVisible(false);
+            this.BtnPremios.setVisible(false);
             this.BtnCambiarFam.setVisible(false);
             this.BtnCerrarSesion.setVisible(false);
-            this.BtnActivosEnLaFamilia.setVisible(false);
-
+            this.BtnTareas.setVisible(false);
+            this.BtnTareasEntregadas.setVisible(false);
+            this.BtnNotis.setVisible(false);
+            this.BtnPremiosAct.setVisible(false);
             this.menuInt = 0;
 
         }
     }//GEN-LAST:event_BtnMenuActionPerformed
+
+    private void BtnTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTareasActionPerformed
+        new FramePantallaPrincipal(upf, usuarioLogeado).setVisible(true); //
+        this.dispose();
+    }//GEN-LAST:event_BtnTareasActionPerformed
+
+    private void BtnPremiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPremiosActionPerformed
+        new FramePremiosPantalla(upf, usuarioLogeado).setVisible(true); //
+        this.dispose();
+    }//GEN-LAST:event_BtnPremiosActionPerformed
 
     private void BtnTareasEntregadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTareasEntregadasActionPerformed
         new FrameTareasHechas(upf, usuarioLogeado).setVisible(true); //
         this.dispose();
     }//GEN-LAST:event_BtnTareasEntregadasActionPerformed
 
-    private void BtnReclamarPremioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnReclamarPremioActionPerformed
-        int indicePremioSelected = TabPremios.getSelectedRow();
-        if (indicePremioSelected == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un premio para reclamar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        String dniUsuario = usuarioLogeado.getDni();
-        List<Premios> premios = servicio.obtenerPremiosActivosPorFamilia(idFamilia);
-
-        if (indicePremioSelected >= 0 && indicePremioSelected < premios.size()) {
-            Premios premioSeleccionado = premios.get(indicePremioSelected);
-            int puntosNecesarios = premioSeleccionado.getPuntosRequeridos();
-
-            // Buscar los puntos actuales del usuario
-            UsuarioPerteneceFamilia upf = servicio.findUsuarioPerteneceFamilia(new UsuarioPerteneceFamiliaPK(dniUsuario, idFamilia));
-            if (upf != null && upf.getPuntos() >= puntosNecesarios) {
-                Date fechaActual = new Date();
-
-                UsuarioReclamaPremios premioReclamado = new UsuarioReclamaPremios();
-                premioReclamado.setDni(dniUsuario);
-                premioReclamado.setIdPremio(premioSeleccionado.getIdPremio());
-                premioReclamado.setReclamado(fechaActual);
-                premioReclamado.setActivo(true);
-
-                // Actualizar puntos del usuario
-                upf.setPuntos(upf.getPuntos() - puntosNecesarios);
-                try {
-                    servicio.editUsuarioPerteneceFamilia(upf);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Error al reclamar el premio.", "No se pudo actualizar la base de datos", JOptionPane.ERROR_MESSAGE);
-                }
-
-                // Registrar la reclamación del premio
-                servicio.crearUsuarioReclamaPremio(premioReclamado);
-
-                JOptionPane.showMessageDialog(this, "Premio reclamado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "No tiene suficientes puntos para reclamar este premio.", "Puntos Insuficientes", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Selección de premio inválida.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_BtnReclamarPremioActionPerformed
-
-    private void BtnNotisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNotisActionPerformed
-        new FrameNotificaciones(upf, usuarioLogeado).setVisible(true); // 
+    private void BtnCambiarFamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCambiarFamActionPerformed
+        new FrameListaFams(usuarioLogeado.getDni()).setVisible(true); //
         this.dispose();
-    }//GEN-LAST:event_BtnNotisActionPerformed
-
-    private void BtnAñadirPremiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAñadirPremiosActionPerformed
-        new FrameAddPremio(idFamilia, this).setVisible(true); //
-    }//GEN-LAST:event_BtnAñadirPremiosActionPerformed
-
-    private void BtnEditarPremioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarPremioActionPerformed
-        int indicePremioSeleccionado = TabPremios.getSelectedRow();
-        Premios premioSeleccionado;
-        if (indicePremioSeleccionado == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un premio para editar", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        String dniUsuario = usuarioLogeado.getDni();
-        List<Premios> premios = servicio.obtenerPremiosActivosPorFamilia(idFamilia);
-
-        if (indicePremioSeleccionado >= 0 && indicePremioSeleccionado < premios.size()) {
-            premioSeleccionado = premios.get(indicePremioSeleccionado);
-
-            Date fechaActual = new Date();
-
-            Premios PremioSeleccionado = new Premios();
-
-            new FrameAdmPremio(upf, usuarioLogeado, premioSeleccionado, this).setVisible(true);
-
-        }
-    }//GEN-LAST:event_BtnEditarPremioActionPerformed
+    }//GEN-LAST:event_BtnCambiarFamActionPerformed
 
     private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
-        new FrameLogin().setVisible(true); // 
+        new FrameLogin().setVisible(true); //
         this.dispose();
 
     }//GEN-LAST:event_BtnCerrarSesionActionPerformed
 
-    private void BtnCambiarFamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCambiarFamActionPerformed
-        new FrameListaFams(usuarioLogeado.getDni()).setVisible(true); // 
+    private void BtnNotisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNotisActionPerformed
+        new FrameNotificaciones(upf, usuarioLogeado).setVisible(true); //
         this.dispose();
-    }//GEN-LAST:event_BtnCambiarFamActionPerformed
+    }//GEN-LAST:event_BtnNotisActionPerformed
 
-    private void BtnTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTareasActionPerformed
-        new FramePantallaPrincipal(upf, usuarioLogeado).setVisible(true); // 
-        this.dispose();
-    }//GEN-LAST:event_BtnTareasActionPerformed
+    private void BtnDesactivarPremioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDesactivarPremioActionPerformed
+        int selectedRow = TabPremiosActivos.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un premio para desactivar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) TabPremiosActivos.getModel();
+        String dniUsuario = model.getValueAt(selectedRow, 5).toString();
+        String idPremio = model.getValueAt(selectedRow, 4).toString();
+        Date fechaReclamado = (Date) model.getValueAt(selectedRow, 2); // Asegúrate de que la fecha se maneje correctamente
+
+        UsuarioReclamaPremiosId urpId = new UsuarioReclamaPremiosId(dniUsuario, idPremio, fechaReclamado);
+        UsuarioReclamaPremios premioActivo = servicio.findPremioActivoPorId(urpId);
+
+        if (premioActivo == null) {
+            JOptionPane.showMessageDialog(this, "Premio no encontrado o ya no está activo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            // Llamar al método para desactivar el premio
+            servicio.deactivatePremio(premioActivo);
+        } catch (Exception ex) {
+            Logger.getLogger(FramePremiosDeFamilia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        JOptionPane.showMessageDialog(this, "Premio desactivado exitosamente.", "Premio Desactivado", JOptionPane.INFORMATION_MESSAGE);
+
+        try {
+            // Actualizar la tabla para reflejar el cambio
+            updatePremiosActivosTable();
+        } catch (Exception ex) {
+            Logger.getLogger(FramePremiosDeFamilia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_BtnDesactivarPremioActionPerformed
 
     private void BtnPremiosActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPremiosActActionPerformed
         try {
-            new FramePremiosActivos(usuarioLogeado, upf).setVisible(true); // 
+            new FramePremiosActivos(usuarioLogeado, upf).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(FramePremiosPantalla.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FramePremiosDeFamilia.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.dispose();
     }//GEN-LAST:event_BtnPremiosActActionPerformed
+    private void updatePremiosActivosTable() throws Exception {
+        String idPremio;
+        Premios premioActivoSingular;
+        String nombreDelPremio;
+        String nombreDelUser;
+        Usuario user;
+        List<UsuarioReclamaPremios> premiosActivos = servicio.findPremiosActivosPorFamilia(idFamilia);
+        DefaultTableModel model = (DefaultTableModel) TabPremiosActivos.getModel();
+        model.setRowCount(0); // Clear existing data
 
-    private void BtnActivosEnLaFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActivosEnLaFamiliaActionPerformed
-        try {
-            new FramePremiosDeFamilia(usuarioLogeado, upf).setVisible(true); //
-            this.dispose();
-        } catch (Exception ex) {
-            Logger.getLogger(FramePremiosPantalla.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_BtnActivosEnLaFamiliaActionPerformed
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        for (UsuarioReclamaPremios premioActivo : premiosActivos) {
+            idPremio = premioActivo.getIdPremio();
+            premioActivoSingular = servicio.findPremioById(idPremio);
+            nombreDelPremio = premioActivoSingular.getNombre();
+            String fecha = sdf.format(premioActivo.getReclamado());
+            String tiempoRestante = calculateRemainingTime(premioActivo.getReclamado(), premioActivoSingular.getDuracion());
 
-    /**
-     * @param args the command line arguments
-     */
-    void cargarPremios(int idFamilia) {
-        List<Premios> premios = servicio.obtenerPremiosActivosPorFamilia(idFamilia);
-        DefaultTableModel model = (DefaultTableModel) TabPremios.getModel();
-        model.setRowCount(0); // Limpiar la tabla
+            user = servicio.findUsuarioByDni(premioActivo.getDni());
+            nombreDelUser = user.getNombre();
 
-        for (Premios premio : premios) {
-            model.addRow(new Object[]{premio.getNombre(), premio.getPuntosRequeridos(), premio.getDescripcion()});
+            if (tiempoRestante.equalsIgnoreCase("caducado")) {
+                servicio.deactivatePremio(premioActivo);
+            } else {
+                model.addRow(new Object[]{nombreDelUser, nombreDelPremio, fecha, tiempoRestante, idPremio, premioActivo.getDni()});
+            }
+
         }
     }
 
+    private String calculateRemainingTime(Date startDate, int durationDays) {
+        // Calculate end time in milliseconds
+        long endTimeInMillis = startDate.getTime() + durationDays * 24L * 60 * 60 * 1000;
+        long remainingTime = endTimeInMillis - System.currentTimeMillis();
+
+        // Check if the remaining time is negative, indicating expiration
+        if (remainingTime <= 0) {
+            return "Caducado";
+        }
+
+        // Calculate remaining days and hours if not expired
+        long days = TimeUnit.MILLISECONDS.toDays(remainingTime);
+        long hours = TimeUnit.MILLISECONDS.toHours(remainingTime) % 24;
+
+        return days + " días, " + hours + " horas restantes";
+    }
+    /**
+     * @param args the command line arguments
+     */
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnActivosEnLaFamilia;
-    private javax.swing.JButton BtnAñadirPremios;
     private javax.swing.JButton BtnCambiarFam;
     private javax.swing.JButton BtnCerrarSesion;
-    private javax.swing.JButton BtnEditarPremio;
+    private javax.swing.JButton BtnDesactivarPremio;
     private javax.swing.JButton BtnMenu;
     private javax.swing.JButton BtnNotis;
+    private javax.swing.JButton BtnPremios;
     private javax.swing.JButton BtnPremiosAct;
-    private javax.swing.JButton BtnReclamarPremio;
     private javax.swing.JButton BtnTareas;
     private javax.swing.JButton BtnTareasEntregadas;
-    private javax.swing.JTable TabPremios;
+    private javax.swing.JTable TabPremiosActivos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel mainPanel;

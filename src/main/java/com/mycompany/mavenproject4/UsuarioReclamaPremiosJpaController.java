@@ -136,6 +136,31 @@ public class UsuarioReclamaPremiosJpaController {
         }
     }
 
+    public List<UsuarioReclamaPremios> findPremiosActivosPorUsuarioEnFamilia(String dni, int idFamilia) {
+        EntityManager em = getEntityManager();
+        try {
+            String jpql = "SELECT urp FROM UsuarioReclamaPremios urp JOIN urp.premio p WHERE urp.dni = :dni AND p.idFamilia = :idFamilia AND urp.activo = TRUE";
+            TypedQuery<UsuarioReclamaPremios> query = em.createQuery(jpql, UsuarioReclamaPremios.class);
+            query.setParameter("dni", dni);
+            query.setParameter("idFamilia", idFamilia);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<UsuarioReclamaPremios> findPremiosActivosPorFamilia(int idFamilia) {
+        EntityManager em = getEntityManager();
+        try {
+            String jpql = "SELECT urp FROM UsuarioReclamaPremios urp JOIN urp.premio p WHERE p.idFamilia = :idFamilia AND urp.activo = TRUE";
+            TypedQuery<UsuarioReclamaPremios> query = em.createQuery(jpql, UsuarioReclamaPremios.class);
+            query.setParameter("idFamilia", idFamilia);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
     public List<UsuarioReclamaPremios> findAllUsuarioReclamaPremios() {
         EntityManager em = getEntityManager();
         try {

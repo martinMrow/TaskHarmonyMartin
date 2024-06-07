@@ -11,7 +11,10 @@ package com.mycompany.mavenproject4;
 import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 public class UsuarioHaceTareasJpaController {
 
@@ -62,8 +65,6 @@ public class UsuarioHaceTareasJpaController {
         }
     }
 
-   
-
     public void destroy(UsuarioHaceTareasId id) throws Exception {
         EntityManager em = null;
         try {
@@ -93,6 +94,32 @@ public class UsuarioHaceTareasJpaController {
         }
     }
 
+    public List<UsuarioHaceTareas> findTareasHechasPorUsuarioEnFamilia(String dni, int idFamilia) {
+        EntityManager em = getEntityManager();
+        try {
+            String jpql = "SELECT uht FROM UsuarioHaceTareas uht JOIN uht.tarea t WHERE uht.dni = :dni AND t.idFamilia = :idFamilia";
+            TypedQuery<UsuarioHaceTareas> query = em.createQuery(jpql, UsuarioHaceTareas.class);
+            query.setParameter("dni", dni);
+            query.setParameter("idFamilia", idFamilia);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<UsuarioHaceTareas> findTareasHechasPorFamilia(int idFamilia) {
+        EntityManager em = getEntityManager();
+        try {
+            // JPQL query to select tasks made by any user within a specific family
+            String jpql = "SELECT uht FROM UsuarioHaceTareas uht JOIN uht.tarea t WHERE t.idFamilia = :idFamilia";
+            TypedQuery<UsuarioHaceTareas> query = em.createQuery(jpql, UsuarioHaceTareas.class);
+            query.setParameter("idFamilia", idFamilia);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
     public List<UsuarioHaceTareas> findAllUsuarioHaceTareas() {
         EntityManager em = getEntityManager();
         try {
@@ -104,5 +131,5 @@ public class UsuarioHaceTareasJpaController {
             em.close();
         }
     }
-    
+
 }

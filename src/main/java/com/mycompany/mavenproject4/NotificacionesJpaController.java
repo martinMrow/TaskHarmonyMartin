@@ -121,6 +121,18 @@ public class NotificacionesJpaController {
         }
     }
 
+    public List<Notificaciones> findNotificacionesByAdmin(String dniAdmin) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Notificaciones> query = em.createQuery(
+                    "SELECT n FROM Notificaciones n WHERE n.dniAdmin = :dniAdmin", Notificaciones.class);
+            query.setParameter("dniAdmin", dniAdmin);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
     public List<Notificaciones> findAllNotificaciones() {
         EntityManager em = getEntityManager();
         try {

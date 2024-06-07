@@ -14,7 +14,6 @@ import java.util.Date;
 
 @Entity
 @Table(name = "usuario_reclama_premios")
-@IdClass(UsuarioReclamaPremiosId.class) // Clase que define la clave compuesta
 public class UsuarioReclamaPremios implements Serializable {
 
     @Id
@@ -24,6 +23,10 @@ public class UsuarioReclamaPremios implements Serializable {
     @Id
     @Column(name = "id_premio")
     private String idPremio;
+
+    @ManyToOne
+    @JoinColumn(name = "id_premio", referencedColumnName = "id_premio", insertable = false, updatable = false)
+    private Premios premio;
 
     @Id
     @Column(name = "reclamado")
@@ -69,9 +72,14 @@ public class UsuarioReclamaPremios implements Serializable {
     @PreUpdate
     @PrePersist
     public void updateActivoStatus() {
-        if (this.reclamado != null) {
-            // Asigna 'activo' a false si la duraciÃ³n desde 'reclamado' ha excedido un cierto umbral
-            // Esta lÃ³gica necesitarÃ¡ ser adaptada segÃºn cÃ³mo se almacene la duraciÃ³n del premio
+        if (this.reclamado != null && this.premio != null) {
+            Date today = new Date();
+            long durationInMillis = this.premio.getDuracion() * 24 * 60 * 60 * 1000; 
+            Date expirationDate = new Date(this.reclamado.getTime() + durationInMillis);
+
+            if (today.after(expirationDate)) {
+                this.activo = false; 
+            }
         }
     }
 }
