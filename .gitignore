@@ -1,0 +1,13 @@
+# Archivos de la base de datos H2
+bbdd.mv.db
+bbdd.trace.db
+
+# Archivos de compilación
+target/
+*.class
+*.log
+
+# Configuración de IntelliJ/NetBeans
+.idea/
+.vscode/
+nbproject/private/
