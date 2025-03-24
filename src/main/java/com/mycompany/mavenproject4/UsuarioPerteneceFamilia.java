@@ -24,10 +24,10 @@ public class UsuarioPerteneceFamilia {
     private int idFamilia;
 
     @Column(name = "puntos")
-    private Integer puntos;
+    private int puntos;
 
     @Column(name = "isActive")
-    private Boolean isActive = false;
+    private boolean isActive = false;
 
     public UsuarioPerteneceFamilia() {
     }
@@ -49,19 +49,19 @@ public class UsuarioPerteneceFamilia {
         this.idFamilia = idFamilia;
     }
 
-    public Integer getPuntos() {
+    public int getPuntos() {
         return puntos;
     }
 
-    public void setPuntos(Integer puntos) {
+    public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
 
-    public Boolean getIsActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(Boolean isActive) {
+    public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
 }

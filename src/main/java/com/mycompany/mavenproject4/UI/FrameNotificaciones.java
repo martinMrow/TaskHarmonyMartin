@@ -4,6 +4,10 @@
  */
 package com.mycompany.mavenproject4.UI;
 
+import com.mycompany.mavenproject4.UI.premios.FramePremiosActivos;
+import com.mycompany.mavenproject4.UI.premios.FramePremiosPantalla;
+import com.mycompany.mavenproject4.UI.tareas.FramePantallaPrincipal;
+import com.mycompany.mavenproject4.UI.tareas.FrameTareasHechas;
 import com.mycompany.mavenproject4.Notificaciones;
 import com.mycompany.mavenproject4.ServicioAplicacion;
 import com.mycompany.mavenproject4.SideMenuPanel;
@@ -16,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -54,7 +59,12 @@ public class FrameNotificaciones extends javax.swing.JFrame {
         sp.setResponsiveMinWidth(600);
         sp.openMenu();
         cargarNotificaciones();
-
+        try {
+            this.setIconImage(new ImageIcon(getClass().getResource("/imgs/icons8-familia-hombre-mujer-64.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("Error al cargar el icono: " + e.getMessage());
+        }
+        this.setTitle("Task Harmony: Notificaciones");
     }
 
     /**
@@ -85,11 +95,11 @@ public class FrameNotificaciones extends javax.swing.JFrame {
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         sidebar.setBackground(new java.awt.Color(0, 30, 54));
-        sidebar.setToolTipText("");
+        sidebar.setToolTipText("Menú de opciones");
 
         BtnMenu.setBackground(new java.awt.Color(0, 30, 54));
         BtnMenu.setForeground(new java.awt.Color(0, 30, 54));
-        BtnMenu.setIcon(new javax.swing.ImageIcon("C:\\Users\\tetra\\Desktop\\tfg\\Persistencia-BranchDeMartinMVAR\\Persistencia-BranchDeMartinMVAR\\mavenproject4\\src\\main\\java\\com\\mycompany\\mavenproject4\\imgs\\menu_15.png")); // NOI18N
+        BtnMenu.setIcon(new javax.swing.ImageIcon("C:\\Users\\tetra\\Desktop\\tfg\\Persistencia-BranchDeMartinMVAR\\Persistencia-BranchDeMartinMVAR\\mavenproject4\\src\\main\\resources\\imgs\\menu_15.png")); // NOI18N
         BtnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnMenuActionPerformed(evt);
@@ -99,6 +109,7 @@ public class FrameNotificaciones extends javax.swing.JFrame {
         BtnPremiosTotal.setBackground(new java.awt.Color(0, 30, 54));
         BtnPremiosTotal.setForeground(new java.awt.Color(255, 255, 255));
         BtnPremiosTotal.setText("Premios");
+        BtnPremiosTotal.setToolTipText("Premios disponibles para reclamar");
         BtnPremiosTotal.setMaximumSize(new java.awt.Dimension(114, 23));
         BtnPremiosTotal.setMinimumSize(new java.awt.Dimension(114, 23));
         BtnPremiosTotal.addActionListener(new java.awt.event.ActionListener() {
@@ -110,6 +121,7 @@ public class FrameNotificaciones extends javax.swing.JFrame {
         BtnPremiosAct.setBackground(new java.awt.Color(0, 30, 54));
         BtnPremiosAct.setForeground(new java.awt.Color(255, 255, 255));
         BtnPremiosAct.setText("Premios Activos");
+        BtnPremiosAct.setToolTipText("Premios activos reclamados por ti");
         BtnPremiosAct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnPremiosActActionPerformed(evt);
@@ -119,6 +131,7 @@ public class FrameNotificaciones extends javax.swing.JFrame {
         BtnTareasEntregadas.setBackground(new java.awt.Color(0, 30, 54));
         BtnTareasEntregadas.setForeground(new java.awt.Color(255, 255, 255));
         BtnTareasEntregadas.setText("Tareas Hechas");
+        BtnTareasEntregadas.setToolTipText("Tareas hechas por ti");
         BtnTareasEntregadas.setMaximumSize(new java.awt.Dimension(114, 23));
         BtnTareasEntregadas.setMinimumSize(new java.awt.Dimension(114, 23));
         BtnTareasEntregadas.addActionListener(new java.awt.event.ActionListener() {
@@ -129,8 +142,9 @@ public class FrameNotificaciones extends javax.swing.JFrame {
 
         BtnCambiarFam.setBackground(new java.awt.Color(0, 30, 54));
         BtnCambiarFam.setForeground(new java.awt.Color(255, 255, 255));
-        BtnCambiarFam.setIcon(new javax.swing.ImageIcon("C:\\Users\\tetra\\Desktop\\tfg\\Persistencia-BranchDeMartinMVAR\\Persistencia-BranchDeMartinMVAR\\mavenproject4\\src\\main\\java\\com\\mycompany\\mavenproject4\\imgs\\home (Custom).png")); // NOI18N
+        BtnCambiarFam.setIcon(new javax.swing.ImageIcon("C:\\Users\\tetra\\Desktop\\tfg\\Persistencia-BranchDeMartinMVAR\\Persistencia-BranchDeMartinMVAR\\mavenproject4\\src\\main\\resources\\imgs\\home (Custom).png")); // NOI18N
         BtnCambiarFam.setText("Cambiar familia");
+        BtnCambiarFam.setToolTipText("Seleccionar otra familia");
         BtnCambiarFam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnCambiarFamActionPerformed(evt);
@@ -139,8 +153,9 @@ public class FrameNotificaciones extends javax.swing.JFrame {
 
         BtnCerrarSesion.setBackground(new java.awt.Color(0, 30, 54));
         BtnCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
-        BtnCerrarSesion.setIcon(new javax.swing.ImageIcon("C:\\Users\\tetra\\Desktop\\tfg\\Persistencia-BranchDeMartinMVAR\\Persistencia-BranchDeMartinMVAR\\mavenproject4\\src\\main\\java\\com\\mycompany\\mavenproject4\\imgs\\settings (Custom).png")); // NOI18N
+        BtnCerrarSesion.setIcon(new javax.swing.ImageIcon("C:\\Users\\tetra\\Desktop\\tfg\\Persistencia-BranchDeMartinMVAR\\Persistencia-BranchDeMartinMVAR\\mavenproject4\\src\\main\\resources\\imgs\\settings (Custom).png")); // NOI18N
         BtnCerrarSesion.setText("Cerrar sesión");
+        BtnCerrarSesion.setToolTipText("Cerrar la sesión actual");
         BtnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnCerrarSesionActionPerformed(evt);
@@ -150,6 +165,7 @@ public class FrameNotificaciones extends javax.swing.JFrame {
         BtnTareasTotales.setBackground(new java.awt.Color(0, 30, 54));
         BtnTareasTotales.setForeground(new java.awt.Color(255, 255, 255));
         BtnTareasTotales.setText("Tareas");
+        BtnTareasTotales.setToolTipText("Tareas disponibles para realizar");
         BtnTareasTotales.setMaximumSize(new java.awt.Dimension(114, 23));
         BtnTareasTotales.setMinimumSize(new java.awt.Dimension(114, 23));
         BtnTareasTotales.addActionListener(new java.awt.event.ActionListener() {
@@ -223,6 +239,7 @@ public class FrameNotificaciones extends javax.swing.JFrame {
         BtnLeerYResponder.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 12)); // NOI18N
         BtnLeerYResponder.setForeground(new java.awt.Color(255, 255, 255));
         BtnLeerYResponder.setText("Leer y responder");
+        BtnLeerYResponder.setToolTipText("Leer la notificación seleccionada y responder");
         BtnLeerYResponder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnLeerYResponderActionPerformed(evt);
@@ -235,17 +252,15 @@ public class FrameNotificaciones extends javax.swing.JFrame {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))
-                        .addContainerGap())
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                        .addGap(0, 140, Short.MAX_VALUE)
                         .addComponent(BtnLeerYResponder, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(150, Short.MAX_VALUE))))
+                        .addGap(0, 144, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,13 +316,17 @@ public class FrameNotificaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnMenuActionPerformed
 
     private void BtnPremiosTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPremiosTotalActionPerformed
-        new FramePremiosPantalla(upf, usuarioLogeado).setVisible(true); //
+        FramePremiosPantalla frame = new FramePremiosPantalla(upf, usuarioLogeado);
+        frame.setLocationRelativeTo(this);  // Posición relativa al padre
+        frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnPremiosTotalActionPerformed
 
     private void BtnPremiosActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPremiosActActionPerformed
         try {
-            new FramePremiosActivos(usuarioLogeado, upf).setVisible(true); //
+            FramePremiosActivos frame = new FramePremiosActivos(usuarioLogeado, upf);
+            frame.setLocationRelativeTo(this);  // Posición relativa al padre
+            frame.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(FrameNotificaciones.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -315,7 +334,9 @@ public class FrameNotificaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnPremiosActActionPerformed
 
     private void BtnTareasEntregadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTareasEntregadasActionPerformed
-        new FrameTareasHechas(upf, usuarioLogeado).setVisible(true); //
+        FrameTareasHechas frame = new FrameTareasHechas(upf, usuarioLogeado);
+        frame.setLocationRelativeTo(this);  // Posición relativa al padre
+        frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnTareasEntregadasActionPerformed
 
@@ -334,50 +355,71 @@ public class FrameNotificaciones extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Notificación no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (notificacion.getLeido()) {
+            // Mostrar sólo la notificación sin permitir la respuesta porque ya fue leída
+            JOptionPane.showMessageDialog(this,
+                    "Detalles de la notificación:\n\n"
+                    + "Solicitante: " + notificacion.getDestinatario() + "\n"
+                    + "Fecha: " + notificacion.getFechaHora() + "\n\n"
+                    + "Esta notificación ya ha sido atendida.",
+                    "Notificación Leída",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            // Mostrar el diálogo de respuesta
+            int respuesta = JOptionPane.showOptionDialog(this,
+                    "El usuario " + notificacion.getDestinatario() + " ha solicitado unirse a tu familia.\nFecha: " + notificacion.getFechaHora(),
+                    "Responder Notificación",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new String[]{"Aceptar", "Denegar", "Salir"},
+                    "Aceptar");
 
-        // Mostrar el diálogo de respuesta
-        int respuesta = JOptionPane.showOptionDialog(this,
-                "El usuario " + notificacion.getDestinatario() + " ha solicitado unirse a tu familia.\nFecha: " + notificacion.getFechaHora(),
-                "Responder Notificación",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.INFORMATION_MESSAGE,
-                null,
-                new String[]{"Aceptar", "Denegar", "Salir"},
-                "Aceptar");
+            switch (respuesta) {
+                case JOptionPane.YES_OPTION: {
+                    try {
+                        servicio.aceptarSolicitud(notificacion.getDestinatario(), idFamilia);
+                        notificacion.setLeido(true);
+                        servicio.LeerNotificacion(notificacion);
+                        cargarNotificaciones();
 
-        switch (respuesta) {
-            case JOptionPane.YES_OPTION: {
-                try {
-                    servicio.aceptarSolicitud(notificacion.getDestinatario(), idFamilia);
-                } catch (Exception ex) {
-                    Logger.getLogger(FrameNotificaciones.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(FrameNotificaciones.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            }
-            break;
+                break;
 
-            case JOptionPane.NO_OPTION:
-                servicio.denegarSolicitud(notificacion.getDestinatario(), idFamilia);
-                break;
-            default:
-                // No hacer nada
-                break;
+                case JOptionPane.NO_OPTION:
+                    servicio.denegarSolicitud(notificacion.getDestinatario(), idFamilia);
+                    break;
+                default:
+                    // No hacer nada
+                    break;
+            }
         }
     }//GEN-LAST:event_BtnLeerYResponderActionPerformed
 
     private void BtnTareasTotalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTareasTotalesActionPerformed
-        new FramePantallaPrincipal(upf, usuarioLogeado).setVisible(true); //
+        FramePantallaPrincipal frame = new FramePantallaPrincipal(upf, usuarioLogeado);
+        frame.setLocationRelativeTo(this);  // Posición relativa al padre
+        frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnTareasTotalesActionPerformed
 
     private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
-        new FrameLogin().setVisible(true); // 
+        FrameLogin frame = new FrameLogin();
+        frame.setLocationRelativeTo(this);  // Posición relativa al padre
+        frame.setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_BtnCerrarSesionActionPerformed
 
     private void BtnCambiarFamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCambiarFamActionPerformed
-        new FrameListaFams(usuarioLogeado.getDni()).setVisible(true); // 
+        FrameListaFams frame = new FrameListaFams(usuarioLogeado.getDni());
+        frame.setLocationRelativeTo(this);  // Posición relativa al padre
+        frame.setVisible(true);
         this.dispose();
+
     }//GEN-LAST:event_BtnCambiarFamActionPerformed
 
     /**

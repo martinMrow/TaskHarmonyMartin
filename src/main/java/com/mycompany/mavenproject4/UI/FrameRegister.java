@@ -6,6 +6,7 @@ package com.mycompany.mavenproject4.UI;
 
 import com.mycompany.mavenproject4.ServicioAplicacion;
 import com.mycompany.mavenproject4.UI.FrameLogin;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,7 +23,12 @@ public class FrameRegister extends javax.swing.JFrame {
     public FrameRegister() {
         initComponents();
         servicio = new ServicioAplicacion();
-
+        try {
+            this.setIconImage(new ImageIcon(getClass().getResource("/imgs/icons8-familia-hombre-mujer-64.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("Error al cargar el icono: " + e.getMessage());
+        }
+        this.setTitle("Task Harmony: Registro");
     }
 
     /**
@@ -103,6 +109,7 @@ public class FrameRegister extends javax.swing.JFrame {
         BtnRegister.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         BtnRegister.setForeground(new java.awt.Color(255, 255, 255));
         BtnRegister.setText("Registrarme");
+        BtnRegister.setToolTipText("Crear una cuenta con los datos introducidos");
         BtnRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnRegisterActionPerformed(evt);
@@ -246,27 +253,31 @@ public class FrameRegister extends javax.swing.JFrame {
         String apellidos = TxtApellidos.getText().trim();
         String password = new String(txtPass.getPassword());
 
-        // Limpiar campos después de obtener los valores
+// Limpiar campos después de obtener los valores
         username.setText("");
         TxtNombre.setText("");
         TxtApellidos.setText("");
         txtPass.setText("");
 
-        // Llamar al método de servicio para registrar el usuario
-        servicio.registrarUsuario(dni, nombre, apellidos, password);
-        JOptionPane.showMessageDialog(this, "Registro completado exitosamente", "Registro", JOptionPane.INFORMATION_MESSAGE);
+// Llamar al método de servicio para registrar el usuario y comprobar el resultado
+        boolean registroExitoso = servicio.registrarUsuario(dni, nombre, apellidos, password);
 
-        FrameLogin frameLogin = new FrameLogin();
-        frameLogin.setVisible(true);
+        if (registroExitoso) {
+            JOptionPane.showMessageDialog(this, "Registro completado exitosamente", "Registro", JOptionPane.INFORMATION_MESSAGE);
+            FrameLogin frameLogin = new FrameLogin();
+            frameLogin.setLocationRelativeTo(this);  // Posición relativa al padre
+            frameLogin.setVisible(true);
+            this.dispose();  // Cierra la ventana actual
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al registrar. Por favor, intente de nuevo.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_BtnRegisterActionPerformed
 
     private void BtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginActionPerformed
-        this.setVisible(false);
-        // O usa this.setVisible(false); si planeas reutilizar la ventana de login más tarde
-
-        // Abre la ventana de registro
         FrameLogin frameLogin = new FrameLogin();
+        frameLogin.setLocationRelativeTo(this);  // Posición relativa al padre
         frameLogin.setVisible(true);
+        this.dispose();  // Cierra la ventana actual
     }//GEN-LAST:event_BtnLoginActionPerformed
 
     private void TxtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtNombreActionPerformed

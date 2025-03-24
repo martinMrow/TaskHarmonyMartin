@@ -32,8 +32,8 @@ public class ServicioAplicacion {
     private UsuarioReclamaPremiosJpaController urpCont;
 
     public ServicioAplicacion() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadJPA");
-        usuarioController = new UsuarioJpaController(emf);
+        this.emf = Persistence.createEntityManagerFactory("unidadJPA");
+        this.usuarioController = new UsuarioJpaController(emf);
         famCont = new FamiliaJpaController(emf);
         usuarioPerteneceFamiliaController = new UsuarioPerteneceFamiliaJpaController(emf);
         tareasCont = new TareasJpaController(emf);
@@ -61,13 +61,15 @@ public class ServicioAplicacion {
     }
 
     // Métodos para usuario
-    public void registrarUsuario(String dni, String nombre, String apellidos, String password) {
+    public boolean registrarUsuario(String dni, String nombre, String apellidos, String password) {
         Usuario usuario = new Usuario(dni, nombre, apellidos, password);
         try {
             usuarioController.create(usuario);
             System.out.println("Usuario registrado exitosamente");
+            return true;  // Retornar true si el registro es exitoso
         } catch (Exception e) {
             System.out.println("Error al registrar el usuario: " + e.getMessage());
+            return false;  // Retornar false si ocurre un error
         }
     }
 
@@ -236,15 +238,46 @@ public class ServicioAplicacion {
         uhtCont.edit(uht);
     }
 
+    public boolean esAdministrador(String dni, int idFamilia) {
+        // Simula una búsqueda que determina si el usuario es administrador
+        // Esto debería hacer una consulta a la base de datos o verificar un estado
+        Familia familia = famCont.findFamiliaById(idFamilia);
+        return familia.getDniAdmin().equals(dni);
+    }
+
     public void sumarPuntosAupf(int puntos, String dni, int IdFam) {
-        UsuarioPerteneceFamiliaPK upfPK= new UsuarioPerteneceFamiliaPK(dni, IdFam);
+        UsuarioPerteneceFamiliaPK upfPK = new UsuarioPerteneceFamiliaPK(dni, IdFam);
         UsuarioPerteneceFamilia upf = usuarioPerteneceFamiliaController.findUsuarioPerteneceFamilia(upfPK);
-        int puntosAntes=upf.getPuntos();
-        upf.setPuntos(puntosAntes+puntos);
+        int puntosAntes = upf.getPuntos();
+        upf.setPuntos(puntosAntes + puntos);
         try {
             usuarioPerteneceFamiliaController.edit(upf);
         } catch (Exception ex) {
             Logger.getLogger(ServicioAplicacion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void LeerNotificacion(Notificaciones notificacion) throws Exception {
+        notCont.edit(notificacion);
+    }
+
+    public UsuarioPerteneceFamilia refreshEntity(UsuarioPerteneceFamiliaPK upfPk) {
+        EntityManager em = emf.createEntityManager();
+        UsuarioPerteneceFamilia upf = null;
+        try {
+            em.getTransaction().begin();
+            upf = em.find(UsuarioPerteneceFamilia.class, upfPk);
+            em.refresh(upf); // Refresca la entidad con la última versión de la base de datos.
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw ex;
+        } finally {
+            em.close();
+        }
+        return upf; // Retorna la entidad refrescada.
+    }
+
 }

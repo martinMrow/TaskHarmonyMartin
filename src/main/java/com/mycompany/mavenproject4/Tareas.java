@@ -18,7 +18,7 @@ public class Tareas {
     private String idTarea;
 
     @Column(name = "puntos")
-    private Integer puntos;
+    private int puntos;
 
     @Column(name = "id_familia")
     private Integer idFamilia;
@@ -41,11 +41,11 @@ public class Tareas {
         this.idTarea = idTarea;
     }
 
-    public Integer getPuntos() {
+    public int getPuntos() {
         return puntos;
     }
 
-    public void setPuntos(Integer puntos) {
+    public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
 

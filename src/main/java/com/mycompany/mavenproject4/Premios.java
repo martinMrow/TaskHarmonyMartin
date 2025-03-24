@@ -20,7 +20,7 @@ public class Premios implements Serializable {
     private String idPremio;
 
     @Column(name = "puntos_requeridos")
-    private Integer puntosRequeridos;
+    private int puntosRequeridos;
 
     @Column(name = "id_familia")
     private Integer idFamilia;
@@ -46,11 +46,11 @@ public class Premios implements Serializable {
         this.idPremio = idPremio;
     }
 
-    public Integer getPuntosRequeridos() {
+    public int getPuntosRequeridos() {
         return puntosRequeridos;
     }
 
-    public void setPuntosRequeridos(Integer puntosRequeridos) {
+    public void setPuntosRequeridos(int puntosRequeridos) {
         this.puntosRequeridos = puntosRequeridos;
     }
 

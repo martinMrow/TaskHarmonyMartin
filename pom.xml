@@ -66,4 +66,5 @@
         <maven.compiler.target>19</maven.compiler.target>
         <exec.mainClass>com.mycompany.mavenproject4.Mavenproject4</exec.mainClass>
     </properties>
+    <name>TaskHarmony</name>
 </project>

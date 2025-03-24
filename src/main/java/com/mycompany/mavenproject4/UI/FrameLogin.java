@@ -5,8 +5,8 @@
 package com.mycompany.mavenproject4.UI;
 
 import com.mycompany.mavenproject4.ServicioAplicacion;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.swing.ImageIcon;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -21,9 +21,17 @@ public class FrameLogin extends javax.swing.JFrame {
      * Creates new form FrameLogin
      */
     public FrameLogin() {
+
         initComponents();
         servicio = new ServicioAplicacion();
 
+        // Ajusta la ruta para salir de la carpeta UI y entrar en la carpeta imgs
+        try {
+            this.setIconImage(new ImageIcon(getClass().getResource("/imgs/icons8-familia-hombre-mujer-64.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("Error al cargar el icono: " + e.getMessage());
+        }
+        this.setTitle("Task Harmony: LogIn");
     }
 
     /**
@@ -103,6 +111,7 @@ public class FrameLogin extends javax.swing.JFrame {
         BtnLogin.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         BtnLogin.setForeground(new java.awt.Color(255, 255, 255));
         BtnLogin.setText("Login");
+        BtnLogin.setToolTipText("Inicia sesión con los datos introducidos");
         BtnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnLoginActionPerformed(evt);
@@ -139,6 +148,7 @@ public class FrameLogin extends javax.swing.JFrame {
         BtnRegistrar.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         BtnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         BtnRegistrar.setText("Registrarse");
+        BtnRegistrar.setToolTipText("Registrate creando una cuenta nueva");
         BtnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnRegistrarActionPerformed(evt);
@@ -219,8 +229,10 @@ public class FrameLogin extends javax.swing.JFrame {
         if (servicio.autenticarUsuario(dni, password)) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso", "Login", JOptionPane.INFORMATION_MESSAGE);
             // Aquí puedes abrir la ventana principal de la aplicación o el dashboard
-            new FrameListaFams(dni).setVisible(true); // Asumiendo que existe una clase MainFrame
-            this.dispose(); // Cierra la ventana de login
+            FrameListaFams frameListaFams = new FrameListaFams(dni);
+            frameListaFams.setLocationRelativeTo(this); // Center relative to this window
+            frameListaFams.setVisible(true);
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Credenciales incorrectas", "Error de Login", JOptionPane.ERROR_MESSAGE);
         }
@@ -232,6 +244,7 @@ public class FrameLogin extends javax.swing.JFrame {
 
         // Abre la ventana de registro
         FrameRegister frameRegister = new FrameRegister();
+        frameRegister.setLocationRelativeTo(this); // Center relative to the login window
         frameRegister.setVisible(true);
     }//GEN-LAST:event_BtnRegistrarActionPerformed
 
@@ -242,37 +255,37 @@ public class FrameLogin extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrameLogin().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FrameLogin().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnLogin;

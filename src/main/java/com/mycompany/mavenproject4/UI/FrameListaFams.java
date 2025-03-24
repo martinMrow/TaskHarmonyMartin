@@ -4,6 +4,7 @@
  */
 package com.mycompany.mavenproject4.UI;
 
+import com.mycompany.mavenproject4.UI.tareas.FramePantallaPrincipal;
 import com.mycompany.mavenproject4.Familia;
 import com.mycompany.mavenproject4.FamiliaJpaController;
 import com.mycompany.mavenproject4.ServicioAplicacion;
@@ -15,6 +16,7 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -42,6 +44,12 @@ public class FrameListaFams extends javax.swing.JFrame {
         servicio = new ServicioAplicacion();
         usuarioLogeado = usuCont.findUsuario(dniUsuario);
         cargarFamilias(dniUsuario);  // Llama a cargarFamilias después de que todos los componentes estén listos
+        try {
+            this.setIconImage(new ImageIcon(getClass().getResource("/imgs/icons8-familia-hombre-mujer-64.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("Error al cargar el icono: " + e.getMessage());
+        }
+        this.setTitle("Task Harmony: Familias");
     }
 
     private void cargarFamilias(String dni) {
@@ -149,9 +157,13 @@ public class FrameListaFams extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         BtnIngresar.setBackground(new java.awt.Color(0, 30, 54));
-        BtnIngresar.setFont(new java.awt.Font("Yu Gothic Medium", 1, 18)); // NOI18N
+        BtnIngresar.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 18)); // NOI18N
         BtnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         BtnIngresar.setText("Entrar");
+        BtnIngresar.setToolTipText("Entrar con la familia seleccionada");
+        BtnIngresar.setAlignmentY(0.0F);
+        BtnIngresar.setAutoscrolls(true);
+        BtnIngresar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnIngresarActionPerformed(evt);
@@ -164,8 +176,10 @@ public class FrameListaFams extends javax.swing.JFrame {
         jLabel2.setText("¿No está tu familia?");
 
         BtnCrearFam.setBackground(new java.awt.Color(0, 30, 54));
+        BtnCrearFam.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         BtnCrearFam.setForeground(new java.awt.Color(255, 255, 255));
         BtnCrearFam.setText("Crear una Familia");
+        BtnCrearFam.setToolTipText("Crear una familia nueva a tu cargo");
         BtnCrearFam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnCrearFamActionPerformed(evt);
@@ -173,8 +187,10 @@ public class FrameListaFams extends javax.swing.JFrame {
         });
 
         BtnSolicFam.setBackground(new java.awt.Color(0, 30, 54));
+        BtnSolicFam.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         BtnSolicFam.setForeground(new java.awt.Color(255, 255, 255));
         BtnSolicFam.setText("Solicitar unirse a una");
+        BtnSolicFam.setToolTipText("Solicitar unirte a una familia existente");
         BtnSolicFam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnSolicFamActionPerformed(evt);
@@ -213,9 +229,10 @@ public class FrameListaFams extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         BtnRecargar.setBackground(new java.awt.Color(0, 30, 54));
-        BtnRecargar.setFont(new java.awt.Font("Yu Gothic Medium", 0, 14)); // NOI18N
+        BtnRecargar.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         BtnRecargar.setForeground(new java.awt.Color(255, 255, 255));
         BtnRecargar.setText("Refrescar");
+        BtnRecargar.setToolTipText("Refrescar el listado de familias");
         BtnRecargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnRecargarActionPerformed(evt);
@@ -341,7 +358,9 @@ public class FrameListaFams extends javax.swing.JFrame {
             if (familiaSeleccionada < familias.size()) {
                 UsuarioPerteneceFamilia upf = familias.get(familiaSeleccionada);
 
-                new FramePantallaPrincipal(upf, usuarioLogeado).setVisible(true); // Asumiendo que existe una clase MainFrame
+                FramePantallaPrincipal framePantallaPrincipal = new FramePantallaPrincipal(upf, usuarioLogeado);
+                framePantallaPrincipal.setLocationRelativeTo(this); // Center relative to this window
+                framePantallaPrincipal.setVisible(true); // Asumiendo que existe una clase MainFrame
                 this.dispose(); // Cierra la ventana de login
             } else {
                 JOptionPane.showMessageDialog(this, "Selección no válida.", "Error", JOptionPane.ERROR_MESSAGE);

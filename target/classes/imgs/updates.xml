@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updateDescriptor baseUrl="">
+  <entry targetMediaFileId="29" updatableVersionMin="" updatableVersionMax="" fileName="TaskHarmony_windows-x64_1_0_0.exe" newVersion="1.0.0" newMediaFileId="29" fileSize="720991744" md5Sum="e02478360ecc859dd5849bca8bdb089d" sha256Sum="e6c0573c00288001fee8ef68dcb8ac0d5be10013cef5740bdff4da719ebd3db3" bundledJre="windows-amd64-11.0.23.tar.gz" archive="false" singleBundle="false">
+    <comment language="es" />
+    <comment language="en" />
+  </entry>
+</updateDescriptor>

@@ -45,21 +45,17 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="sidebar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="146" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="140" max="32767" attributes="0"/>
                           <Component id="BtnLeerYResponder" min="-2" pref="348" max="-2" attributes="0"/>
-                          <EmptySpace pref="150" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="144" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -84,7 +80,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="36" green="1e" red="0" type="rgb"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="toolTipText" type="java.lang.String" value="Men&#xfa; de opciones"/>
           </Properties>
 
           <Layout>
@@ -140,7 +136,7 @@
                   <Color blue="36" green="1e" red="0" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\tetra\Desktop\tfg\Persistencia-BranchDeMartinMVAR\Persistencia-BranchDeMartinMVAR\mavenproject4\src\main\java\com\mycompany\mavenproject4\imgs\menu_15.png"/>
+                  <Image iconType="2" name="C:\Users\tetra\Desktop\tfg\Persistencia-BranchDeMartinMVAR\Persistencia-BranchDeMartinMVAR\mavenproject4\src\main\resources\imgs\menu_15.png"/>
                 </Property>
               </Properties>
               <Events>
@@ -156,6 +152,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Premios"/>
+                <Property name="toolTipText" type="java.lang.String" value="Premios disponibles para reclamar"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[114, 23]"/>
                 </Property>
@@ -176,6 +173,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Premios Activos"/>
+                <Property name="toolTipText" type="java.lang.String" value="Premios activos reclamados por ti"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnPremiosActActionPerformed"/>
@@ -190,6 +188,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Tareas Hechas"/>
+                <Property name="toolTipText" type="java.lang.String" value="Tareas hechas por ti"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[114, 23]"/>
                 </Property>
@@ -210,9 +209,10 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\tetra\Desktop\tfg\Persistencia-BranchDeMartinMVAR\Persistencia-BranchDeMartinMVAR\mavenproject4\src\main\java\com\mycompany\mavenproject4\imgs\home (Custom).png"/>
+                  <Image iconType="2" name="C:\Users\tetra\Desktop\tfg\Persistencia-BranchDeMartinMVAR\Persistencia-BranchDeMartinMVAR\mavenproject4\src\main\resources\imgs\home (Custom).png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cambiar familia"/>
+                <Property name="toolTipText" type="java.lang.String" value="Seleccionar otra familia"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnCambiarFamActionPerformed"/>
@@ -227,9 +227,10 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\tetra\Desktop\tfg\Persistencia-BranchDeMartinMVAR\Persistencia-BranchDeMartinMVAR\mavenproject4\src\main\java\com\mycompany\mavenproject4\imgs\settings (Custom).png"/>
+                  <Image iconType="2" name="C:\Users\tetra\Desktop\tfg\Persistencia-BranchDeMartinMVAR\Persistencia-BranchDeMartinMVAR\mavenproject4\src\main\resources\imgs\settings (Custom).png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cerrar sesi&#xf3;n"/>
+                <Property name="toolTipText" type="java.lang.String" value="Cerrar la sesi&#xf3;n actual"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnCerrarSesionActionPerformed"/>
@@ -244,6 +245,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Tareas"/>
+                <Property name="toolTipText" type="java.lang.String" value="Tareas disponibles para realizar"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[114, 23]"/>
                 </Property>
@@ -349,6 +351,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Leer y responder"/>
+            <Property name="toolTipText" type="java.lang.String" value="Leer la notificaci&#xf3;n seleccionada y responder"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnLeerYResponderActionPerformed"/>
