@@ -23,7 +23,7 @@ TaskHarmony es una aplicación de gestión de tareas familiares, desarrollada co
   3. Crear la base de datos
     Asegúrate de tener MySQL en funcionamiento.
     - Crea una base de datos vacía llamada tfg4.
-    - Ejecuta el script SQL para crear las tablas: ```mysql -u root -p tfg4 < tfg4_clean.sql``` ( Nota: El archivo tfg4_clean.sql se encuentra en la raíz del repositorio y solo contiene la estructura, sin datos preinsertados.)
+    - Ejecuta el script SQL para crear las tablas: ```mysql -u root -p tfg4 < tfg4.sql``` ( Nota: El archivo tfg4_clean.sql se encuentra en la raíz del repositorio y solo contiene la estructura, sin datos preinsertados.)
   
   4. Configurar credenciales de MySQL
     Revisa el archivo src/main/resources/META-INF/persistence.xml y asegúrate de que los datos de acceso a tu base de datos sean correctos:
@@ -44,7 +44,7 @@ TaskHarmony es una aplicación de gestión de tareas familiares, desarrollada co
     ├── src/main/resources/META-INF/
     │   └── persistence.xml
     ├── pom.xml
-    └── tfg4_clean.sql
+    └── tfg4.sql
     
 **Martín MVAR**
 Este proyecto fue desarrollado como parte del TFG en el ciclo superior de Desarrollo de Aplicaciones Multiplataforma. Posteriormente calificado con un 9/10.
