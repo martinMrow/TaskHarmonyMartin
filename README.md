@@ -45,3 +45,6 @@ TaskHarmony es una aplicación de gestión de tareas familiares, desarrollada co
     │   └── persistence.xml
     ├── pom.xml
     └── tfg4_clean.sql
+    
+**Martín MVAR**
+Este proyecto fue desarrollado como parte del TFG en el ciclo superior de Desarrollo de Aplicaciones Multiplataforma. Posteriormente calificado con un 9/10.
