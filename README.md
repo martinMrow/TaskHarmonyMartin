@@ -18,21 +18,21 @@ TaskHarmony es una aplicación de gestión de tareas familiares, desarrollada co
     cd TaskHarmonyMartin/mavenproject4
   
   2. Importar el proyecto en tu IDE
-    Puedes usar NetBeans, IntelliJ IDEA, Eclipse u otro IDE que soporte Maven. Importa el proyecto como un proyecto Maven existente.
+    <br>Puedes usar NetBeans, IntelliJ IDEA, Eclipse u otro IDE que soporte Maven. Importa el proyecto como un proyecto Maven existente.
   
   3. Crear la base de datos
-    Asegúrate de tener MySQL en funcionamiento.
+    <br>Asegúrate de tener MySQL en funcionamiento.
     - Crea una base de datos vacía llamada tfg4.
     - Ejecuta el script SQL para crear las tablas: ```mysql -u root -p tfg4 < tfg4.sql``` ( Nota: El archivo tfg4_clean.sql se encuentra en la raíz del repositorio y solo contiene la estructura, sin datos preinsertados.)
   
   4. Configurar credenciales de MySQL
-    Revisa el archivo src/main/resources/META-INF/persistence.xml y asegúrate de que los datos de acceso a tu base de datos sean correctos:
+   <br>Revisa el archivo src/main/resources/META-INF/persistence.xml y asegúrate de que los datos de acceso a tu base de datos sean correctos:
     ```<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/tfg4"/>```
     ```<property name="javax.persistence.jdbc.user" value="root"/>```
     ```<property name="javax.persistence.jdbc.password" value=""/>```
 
   5. Ejecutar la aplicación
-    Ejecuta el método main desde tu clase de entrada
+  <br>Ejecuta Mavenproject4.java 
 
 **Estructura del proyecto**
 
