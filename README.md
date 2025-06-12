@@ -1,14 +1,15 @@
-_**TaskHarmony - Proyecto TFG**_
+## 📌 TaskHarmony  
+Aplicación desarrollada como TFG para gestionar tareas familiares de manera colaborativa.  
 
-TaskHarmony es una aplicación de gestión de tareas familiares, desarrollada como Trabajo de Fin de Grado. Está programada en Java usando Maven, JPA y una base de datos MySQL.
+### 🛠️ Stack técnico  
+- **Backend**: Java 17 + Spring Boot 3  
+- **Persistencia**: JPA (EclipseLink) + MySQL 8  
+- **Herramientas**: Maven, NetBeans  
 
-**Tecnologías utilizadas**
-  - Java 17
-  - Maven
-  - JPA (Jakarta Persistence API)
-  - MySQL 8+
-  - EclipseLink como proveedor JPA
-  - NetBeans (IDE usado en desarrollo)
+### 🚀 Features clave  
+- API REST con endpoints para gestión de tareas compartidas.  
+- Configuración personalizada de EclipseLink para consultas complejas.  
+- Documentación técnica incluida (configuración JPA, modelo de datos).  
 
 **¿Cómo ejecutar el proyecto?**
 
